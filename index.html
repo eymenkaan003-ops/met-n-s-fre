@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gizli Mesaj ve Panda</title>
+<style>
+body {
+    margin:0;
+    padding:0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to top, #FFDEE9, #B5FFFC);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+#lockContainer {
+    background: rgba(255,255,255,0.85);
+    padding:30px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    z-index:10;
+}
+input {
+    font-size:1.2em;
+    padding:8px;
+    margin-top:10px;
+    border-radius:5px;
+    border:1px solid #333;
+}
+button {
+    font-size:1.2em;
+    padding:8px 15px;
+    margin-top:10px;
+    cursor:pointer;
+    border-radius:5px;
+    border:none;
+    background:#FF4136;
+    color:white;
+}
+#hint {
+    margin-top:10px;
+    font-size:0.9em;
+    color:#555;
+}
+
+#messageContainer {
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    width:80%;
+    max-width:1000px;
+    opacity:0;
+    transition: opacity 1s;
+}
+#panda {
+    width:200px;
+    animation: dance 1s infinite alternate;
+}
+@keyframes dance {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(-5deg); }
+    100% { transform: translateY(0) rotate(5deg); }
+}
+#text {
+    flex:1;
+    margin-left:20px;
+    font-size:1.2em;
+    line-height:1.5;
+    background: rgba(255,255,255,0.8);
+    padding:15px;
+    border-radius:10px;
+}
+#days {
+    margin-top:15px;
+    font-size:1.2em;
+    font-weight:bold;
+    color:#333;
+}
+</style>
+</head>
+<body>
+
+<div id="lockContainer">
+    <h2>Kilitli Mesaj</h2>
+    <input type="text" id="password" placeholder="Şifreyi gir...">
+    <br>
+    <button id="unlockBtn">Aç</button>
+    <div id="hint">İpucu: Sevgili olduğumuz tarih</div>
+</div>
+
+<div id="messageContainer">
+    <img src="https://i.ibb.co/f4QZ6cC/dancing-panda.gif" alt="Dans Eden Panda" id="panda">
+    <div id="text">
+        <p>Sevgili Zümra,</p>
+        <p>Her gün seninle daha özel, daha güzel. Seninle geçirdiğim her an kalbimde bir yıldız gibi parlıyor. Gülüşün, bakışın ve yanında hissettiğim huzur, hayatımı bambaşka kılıyor. Seninle yürüdüğümüz yollar, paylaştığımız kahkahalar ve küçük anılar, bana dünyanın en değerli hazinesi gibi geliyor. Her anımda seni düşündüğümde, mutluluk gözlerimde dans ediyor ve kalbim sana daha çok bağlanıyor. Seninle olmak, hayatın en güzel şiiri gibi; her dizesi sevgi, her satırı mutluluk dolu. Bu yolculuğumuzda, el ele, kalp kalbe, sonsuz bir aşkla yürümek dileğiyle...</p>
+        <div id="days"></div>
+    </div>
+</div>
+
+<script>
+const unlockBtn = document.getElementById('unlockBtn');
+const passwordInput = document.getElementById('password');
+const lockContainer = document.getElementById('lockContainer');
+const messageContainer = document.getElementById('messageContainer');
+const daysDiv = document.getElementById('days');
+
+unlockBtn.addEventListener('click', ()=>{
+    const pass = passwordInput.value.trim().toLowerCase();
+    if(pass === "1 haziran"){
+        lockContainer.style.display='none';
+        messageContainer.style.opacity=1;
+        
+        // Gün sayısını hesapla
+        const startDate = new Date(2025,5,1); // 1 Haziran 2025 (Ay:0-11)
+        const today = new Date();
+        const diffTime = today - startDate;
+        const diffDays = Math.floor(diffTime / (1000*60*60*24));
+        daysDiv.textContent = "Beraber geçirdiğimiz gün sayısı: " + diffDays;
+    } else {
+        alert("Şifre yanlış! Tekrar dene.");
+    }
+});
+</script>
+
+</body>
+</html>
